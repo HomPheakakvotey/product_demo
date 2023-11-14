@@ -32,7 +32,6 @@ public class MainApplication {
             switch (option) {
                 case 1 -> productController.index();
                 case 2 -> {
-                    try {
                         System.out.println("Create Product");
                         System.out.print("Input Product ID: ");
                         Long id = Long.parseLong(scanner.nextLine());
@@ -45,9 +44,6 @@ public class MainApplication {
                         CreateProductDto createProductDto = new CreateProductDto(id, name, qty, price);
                         productController.createProduct(createProductDto);
                         System.out.println("Product has been added!");
-                    } catch (ProductIdNotFoundException e) {
-                        System.out.println(e.getMessage());
-                    }
                 }
                 case 3 -> {
                     try {
