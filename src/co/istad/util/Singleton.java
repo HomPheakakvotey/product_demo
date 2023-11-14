@@ -2,7 +2,7 @@ package co.istad.util;
 
 import co.istad.controller.MenuController;
 import co.istad.controller.ProductController;
-import co.istad.service.ProductServiceImpl;
+import co.istad.service.ProductServiceImp;
 
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ public class Singleton {
     private static Scanner scanner;
     private static MenuController menuController;
     private static ProductController productcontroller;
-    private static ProductServiceImpl productServiceImpl;
+    private static ProductServiceImp productServiceImpl;
 //    2. Create get instance of scanner
     public static Scanner scanner () {
         if (scanner == null) {
@@ -26,9 +26,9 @@ public class Singleton {
         return menuController;
     }
 
-    public static ProductServiceImpl getProductServiceImpl() {
+    public static ProductServiceImp getProductServiceImpl() {
         if (productServiceImpl == null) {
-            productServiceImpl = new ProductServiceImpl();
+            productServiceImpl = new ProductServiceImp();
         }
         return productServiceImpl;
     }

@@ -10,7 +10,4 @@ public class MenuController {
     public void index() {
         menuView.menu();
     }
-
-
-
 }

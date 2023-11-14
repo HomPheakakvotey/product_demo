@@ -2,16 +2,19 @@ package co.istad.service;
 
 import co.istad.dao.ProductDao;
 import co.istad.dao.ProductDaoImpl;
+import co.istad.dao.ProductDaoImpl;
+import co.istad.dto.UpdateProductDto;
 import co.istad.exception.ProductIdNotFoundException;
 import co.istad.model.Product;
 
 import java.util.List;
 import java.util.Optional;
 
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImp implements ProductService{
+
     private final ProductDao productDao;
 
-    public ProductServiceImpl() {
+    public ProductServiceImp() {
         productDao = new ProductDaoImpl();
     }
     @Override
@@ -25,16 +28,19 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product selectById(Long id) {
-        return productDao.selectById(id)
-                .orElseThrow(()
-                        -> new ProductIdNotFoundException(
-                        String.format("Product ID = %s does not exist in DB!",id)
-                ));
+    public Product selectedById(Long id) {
+        return productDao.selectById(id).orElseThrow(()
+                -> new ProductIdNotFoundException(
+                String.format("Product ID = %s does not exist in DB!", id)));
     }
 
     @Override
-    public Product updateById(Product product) {
+    public Product updateById(String id, UpdateProductDto updateProductDto) {
+        Optional<Product> optionalProduct = productDao.selectById(Long.valueOf(id));
+        Product product = optionalProduct.get();
+        product.setName(updateProductDto.getName());
+        product.setQty(updateProductDto.getQty());
+        product.setPrice(updateProductDto.getPrice());
         return productDao.updateById(product);
     }
 

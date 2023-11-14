@@ -1,5 +1,6 @@
 package co.istad.service;
 
+import co.istad.dto.UpdateProductDto;
 import co.istad.model.Product;
 
 import java.util.List;
@@ -10,9 +11,13 @@ public interface ProductService {
 
     List<Product> select();
 
-    Product selectById (Long id);
-    Product updateById(Product product);
+    Product selectedById(Long id);
+
+    Product updateById(String id, UpdateProductDto updateProductDto);
+
     Product deleteById(Long id);
 
     List<Product> selectByName(String name);
+
+
 }
