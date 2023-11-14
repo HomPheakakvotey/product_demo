@@ -4,6 +4,7 @@ import co.istad.controller.MenuController;
 import co.istad.controller.ProductController;
 import co.istad.dto.CreateProductDto;
 import co.istad.dto.UpdateProductDto;
+import co.istad.exception.ProductIdNotFoundException;
 import co.istad.service.ProductServiceImp;
 import co.istad.util.Singleton;
 
@@ -31,38 +32,50 @@ public class MainApplication {
             switch (option) {
                 case 1 -> productController.index();
                 case 2 -> {
-                    System.out.println("Create Product");
-                    System.out.print("Input Product ID: ");
-                    Long id = Long.parseLong(scanner.nextLine());
-                    System.out.print("Input Product Name: ");
-                    String name = scanner.nextLine();
-                    System.out.print("Input Product Qty: ");
-                    Integer qty = Integer.parseInt(scanner.nextLine());
-                    System.out.print("Input Product Price: ");
-                    Double price = Double.parseDouble(scanner.nextLine());
-                    CreateProductDto createProductDto = new CreateProductDto(id, name, qty, price);
-                    productController.createProduct(createProductDto);
-                    System.out.println("Product has been added!");
+                    try {
+                        System.out.println("Create Product");
+                        System.out.print("Input Product ID: ");
+                        Long id = Long.parseLong(scanner.nextLine());
+                        System.out.print("Input Product Name: ");
+                        String name = scanner.nextLine();
+                        System.out.print("Input Product Qty: ");
+                        Integer qty = Integer.parseInt(scanner.nextLine());
+                        System.out.print("Input Product Price: ");
+                        Double price = Double.parseDouble(scanner.nextLine());
+                        CreateProductDto createProductDto = new CreateProductDto(id, name, qty, price);
+                        productController.createProduct(createProductDto);
+                        System.out.println("Product has been added!");
+                    } catch (ProductIdNotFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 case 3 -> {
-                    System.out.println("Update Product");
-                    System.out.print("Input ID to update: ");
-                    String id = scanner.nextLine();
-                    System.out.print("Input Product Name: ");
-                    String newName = scanner.nextLine();
-                    System.out.print("Input Product Qty: ");
-                    Integer newQty = Integer.parseInt(scanner.nextLine());
-                    System.out.print("Input Product Price: ");
-                    Double newPrice = Double.parseDouble(scanner.nextLine());
-                    UpdateProductDto updateProductDto = new UpdateProductDto(newName, newQty, newPrice);
-                    productController.updateProduct(id, updateProductDto);
-                    System.out.println("Product has been updated!");
+                    try {
+                        System.out.println("Update Product");
+                        System.out.print("Input ID to update: ");
+                        String id = scanner.nextLine();
+                        System.out.print("Input Product Name: ");
+                        String newName = scanner.nextLine();
+                        System.out.print("Input Product Qty: ");
+                        Integer newQty = Integer.parseInt(scanner.nextLine());
+                        System.out.print("Input Product Price: ");
+                        Double newPrice = Double.parseDouble(scanner.nextLine());
+                        UpdateProductDto updateProductDto = new UpdateProductDto(newName, newQty, newPrice);
+                        productController.updateProduct(id, updateProductDto);
+                        System.out.println("Product has been updated!");
+                    } catch (ProductIdNotFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
                 }
                 case 4 -> {
-                    System.out.print("Input ID to delete: ");
-                    Long foundId = Long.parseLong(scanner.nextLine());
-                    productController.deleteById(foundId);
-                    System.out.println("Delete Product ID " + foundId + " Successfully");
+                    try {
+                        System.out.print("Input ID to delete: ");
+                        Long foundId = Long.parseLong(scanner.nextLine());
+                        productController.deleteById(foundId);
+                        System.out.println("Delete Product ID " + foundId + " Successfully");
+                    } catch (ProductIdNotFoundException e){
+                        System.out.println(e.getMessage());
+                    }
                 }
                 case 5 -> exit(0);
                 default -> throw new IllegalArgumentException();
